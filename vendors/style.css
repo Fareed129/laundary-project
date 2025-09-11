@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+:root {
+    --primary-color: #47aef3;
+    --secondary-color: #505b61;
+    --tertiory-color: #aaacab;
+}
+
+.header {
+    min-height: 100vh;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 2rem;
+}
+
+nav ul li {
+    list-style: none;
+}
+
+nav ul li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: var(--tertiory-color);
+    font-weight: 500;
+    position: relative;
+    padding: 1rem;
+}
+
+nav ul li a::before{
+content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: var(--primary-color);
+  transition: all 0.4s;
+}
+
+nav ul li a:hover::before{
+    width: 100%;
+  left: 0;
+}
+
+.logo {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav .login {
+    background-color: #ebf8fe;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+nav .login a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+header {
+    background-color: #fafafa;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10rem;
+    align-items: center;
+}
+
+.header-content {
+    padding-left: 3rem;
+}
+
+.header-content h1 {
+    color: var(--secondary-color);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.header-content span {
+    color: var(--primary-color);
+}
+
+.header-content p {
+    color: var(--tertiory-color);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.header-content a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1.5rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+
+.header-img {
+    height: 70vh;
+}
+
+.header-img img {
+    height: 100%;
+}
+
+.achievements {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--primary-color);
+    min-height: 20vh;
+    width: 100%;
+}
+
+.achievements h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.achievements h3 {
+    font-size: 2rem;
+}
+
+.achievements p {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.achievement {
+    padding: 0 3rem;
+    border-right: 1px solid whitesmoke;
+}
