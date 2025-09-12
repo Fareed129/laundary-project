@@ -156,3 +156,37 @@ header {
     padding: 0 3rem;
     border-right: 1px solid whitesmoke;
 }
+.service-container{
+    min-height: 100vh;
+    width: 100%;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    gap: 1.5rem;
+}
+.left-service{
+    background-color: white;
+    min-height: 100%;
+    padding: 2rem 1.5rem;
+}
+.left-service h2{
+    font-size: 2rem;
+}
+.right-service{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    gap: 1.5rem;
+}
+.added-items{
+    background-color: white;
+    min-height: 100%;
+    padding: 2rem 4rem;
+}
+.booking-form{
+    background-color: white;
+    min-height: 100%;
+    padding: 2rem 1.5rem;
+}
