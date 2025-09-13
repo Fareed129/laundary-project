@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
 }
 body{
     text-transform: capitalize;
@@ -158,6 +158,7 @@ header {
 }
 .service-container{
     min-height: 100vh;
+    min-width: 1000px;
     width: 100%;
     background-color: #fafafa;
     display: flex;
@@ -170,10 +171,53 @@ header {
     background-color: white;
     min-height: 100%;
     padding: 2rem 1.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 1px 1px 1px grey;
 }
 .left-service h2{
     font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: black;
 }
+.left-service p{
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+.left-service p::after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--tertiory-color);
+    margin-top: 1rem;
+}
+.service-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;   
+}
+.service-price{
+    color: var(--primary-color);
+    font-weight: bold;
+}
+.service-item .btn{
+    border-radius: 0.5rem;
+    border:none;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+.btn.add{
+    background-color: rgb(226, 224, 224);
+    color: rgb(71, 71, 71);
+}
+
+
+
 .right-service{
     display: flex;
     flex-direction: column;
@@ -184,9 +228,13 @@ header {
     background-color: white;
     min-height: 100%;
     padding: 2rem 4rem;
+    border-radius: 1.25rem;
+    box-shadow: 1px 1px 1px grey;
 }
 .booking-form{
     background-color: white;
     min-height: 100%;
     padding: 2rem 1.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 1px 1px 1px grey;
 }
