@@ -170,10 +170,19 @@ header {
     background-color: white;
     min-height: 100%;
     padding: 2rem 1.5rem;
+    width: 60%;
 }
 .left-service h2{
     font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
 }
+.left-service p{
+    font-size: 1rem;
+    color: var(--tertiory-color);
+    font-weight:500;
+}
+
 .right-service{
     display: flex;
     flex-direction: column;
@@ -190,3 +199,4 @@ header {
     min-height: 100%;
     padding: 2rem 1.5rem;
 }
+
