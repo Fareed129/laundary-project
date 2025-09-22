@@ -1,137 +1,111 @@
-// ==========================
-// CART FUNCTIONALITY
-// ==========================
-const addButtons = document.querySelectorAll(".add");
-const removeButtons = document.querySelectorAll(".remove");
-const cartBody = document.getElementById("cart-body");
-const totalAmountEl = document.getElementById("total-amount");
-
 let cart = [];
 let total = 0;
 
-// Helper: Render Cart
-function renderCart() {
-  cartBody.innerHTML = "";
+const addButtons = document.querySelectorAll(".add");
+const removeButtons = document.querySelectorAll(".remove");
+const cartBody = document.getElementById("cart-body");
+const totalAmount = document.getElementById("total-amount");
+const bookingForm = document.getElementById("booking-form");
+const successMsg = document.getElementById("booking-success");
 
-  if (cart.length === 0) {
-    cartBody.innerHTML = `
-      <tr class="cart-empty">
-        <td colspan="3" style="text-align:center; color: grey;">
-          <div class="empty-info">
-            <ion-icon class="info-icon" name="information-circle-outline"></ion-icon>
-            <p class="title">No items in cart</p>
-            <p class="subtitle">Add items to the cart from service bar.</p>
-          </div>
-        </td>
-      </tr>`;
-  } else {
-    cart.forEach((item, index) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${item.name}</td>
-        <td>₹${item.price.toFixed(2)}</td>`;
-      cartBody.appendChild(row);
-    });
-  }
+function updateCart() {
+    cartBody.innerHTML = "";
 
-  totalAmountEl.innerText = total.toFixed(2);
+    if (cart.length === 0) {
+        cartBody.innerHTML = `
+            <tr>
+                <td colspan="3" style="text-align:center; color: grey;">
+                    Your cart is empty.
+                </td>
+            </tr>`;
+    } else {
+        cart.forEach((item, index) => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${item.name}</td>
+                <td>₹${item.price}</td>`;
+            cartBody.appendChild(row);
+        });
+    }
+
+    totalAmount.innerText = total;
 }
 
-// Add Service
 addButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const serviceItem = btn.closest(".service-item");
-    const name = serviceItem.dataset.name;
-    const price = parseFloat(serviceItem.dataset.price);
+    btn.addEventListener("click", () => {
+        let box = btn.closest(".service-item");
+        let name = box.dataset.name;
+        let price = parseFloat(box.dataset.price);
 
-    cart.push({ name, price });
-    total += price;
+        cart.push({ name: name, price: price });
+        total += price;
 
-    btn.style.display = "none";
-    btn.nextElementSibling.style.display = "inline-block";
+        btn.style.display = "none";
+        btn.nextElementSibling.style.display = "inline-block";
 
-    renderCart();
-  });
+        updateCart();
+    });
 });
 
-// Remove Service
 removeButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const serviceItem = btn.closest(".service-item");
-    const name = serviceItem.dataset.name;
-    const price = parseFloat(serviceItem.dataset.price);
+    btn.addEventListener("click", () => {
+        let box = btn.closest(".service-item");
+        let name = box.dataset.name;
+        let price = parseFloat(box.dataset.price);
 
-    cart = cart.filter(item => item.name !== name);
-    total -= price;
+        cart = cart.filter(item => item.name !== name);
+        total -= price;
 
-    btn.style.display = "none";
-    btn.previousElementSibling.style.display = "inline-block";
+        btn.style.display = "none";
+        btn.previousElementSibling.style.display = "inline-block";
 
-    renderCart();
-  });
+        updateCart();
+    });
 });
 
-/// ==========================
-// BOOKING FORM / EMAILJS
-// ==========================
-document.addEventListener("DOMContentLoaded", () => {
-  const bookingForm = document.getElementById("booking-form");
-  const successMsg = document.getElementById("booking-success");
 
-  successMsg.style.display = "none"; // hide initially
+function sendMail() {
+   
 
-  bookingForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+    const bookBtn = document.querySelector(".book-now-btn");
 
-    // Validate cart
+    // Check if cart is empty
     if (cart.length === 0) {
-      alert("Please add at least one service to book.");
-      return;
+        alert("Please add at least one item in cart.");
+        return;
     }
 
-    // Collect form data
-    const fullName = document.getElementById("fullname").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const mobile = document.getElementById("mobile").value.trim();
+    // Change button text to "Booking..."
+    bookBtn.innerText = "Booking...";
 
-    if (!fullName || !email || !mobile) {
-      alert("Please fill all required fields (Name, Email, Mobile).");
-      return;
-    }
-
-    const templateParams = {
-      fullname: fullName,
-      email: email,
-      mobile: mobile,
-      total_amount: total.toFixed(2)
+    let params = {
+        from_name: document.getElementById("fullname").value,
+        reply_to: document.getElementById("email").value,
+        cart: cart.map(item => `${item.name} (₹${item.price})`).join(", "),
+        total: total.toFixed(2)
     };
 
-    // Send email using promise chaining
-    emailjs.send("service_u6pll1p", "template_0lcqzrn", templateParams)
-      .then((response) => {
-        // Show success message
-        successMsg.style.display = "block";
-        successMsg.innerText = "Thank you! Your booking is confirmed. A confirmation email has been sent.";
+    emailjs.send("service_fy6g2rt", "template_4ysb3ai", params)
+.then(() => {
+    successMsg.style.display = "block";
+    bookBtn.innerText = "Booking Success"; 
+    bookBtn.style.backgroundColor = "#4CAF50";
 
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-          successMsg.style.display = "none";
-        }, 5000);
+    setTimeout(() => {
+        successMsg.style.display = "none";
+        bookBtn.innerText = "Book Now";
+        bookBtn.style.backgroundColor = "";
+    }, 6000);
 
-        // Reset form & cart
-        bookingForm.reset();
-        cart = [];
-        total = 0;
-        renderCart();
-
-        // Reset buttons
-        addButtons.forEach(btn => (btn.style.display = "inline-block"));
-        removeButtons.forEach(btn => (btn.style.display = "none"));
-
-      }, (error) => {
-        console.error("EmailJS error:", error);
-        alert("Failed to send confirmation email. Check your EmailJS config or internet connection.");
-      });
-  });
+    bookingForm.reset();
+    cart = [];
+    total = 0;
+    updateCart();
+})
+.catch((err) => {
+    console.error("Email failed:", err);
+    bookBtn.innerText = "Book Now";
 });
+
+}
